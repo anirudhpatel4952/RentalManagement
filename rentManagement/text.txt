@@ -1,0 +1,21 @@
+Rental Management Console App
+
+THIS RENTAL MANAGEMENT HAS 4 DEFAULT TENANTS AND 4 UNITS IN AN APARTMENT. THE APP IS MADE BASED ON THE FACT THAT
+THERE IS ONLY ONE APARTMENT WITH 4 UNITS AND 4 TENANTS CAPACITY. IT WILL ONLY ASSIGN ONE TENANT PER UNIT.
+
+In this console app, there following services available:
+
+    TO LIST ALL THE RENTAL APARTMENT UNITS, TENANTS AND ASSIGNMENTS:
+    -it will list all the units and tenants info and assignments/contracts that are there.
+    TO ADD A TENANT:
+    -it will add a tenant by asking several inputs. The inputs for Id and Deposit is int and rest are strings. 
+    -So in strings input there is no error handling. User will need to enter the exact information asked.
+    TO REMOVE A TENANT:
+    -this will remove a tenant. user will need to enter the Id of the tenant to remove.
+    TO SEARCH FOR A TENANT OR A UNIT:
+    -tenant will be searched on basis of Id and unit will be searched on basis of unit number.
+    TO ASSIGN A UNIT:
+    -this will assign a unit to a particular tenant using the id of the tenant & unit no. In order to see the assignment or contract completed,
+    -user will need to go to list all assignments.
+    TO QUIT:
+    -this will end the program.
