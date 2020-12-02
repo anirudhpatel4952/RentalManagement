@@ -124,16 +124,12 @@ namespace rentManagement
             return assignment;
             
         }
-        public void Unassignment(int unitNum){
+        public void Unassignment(Guid tenantId, int unitNum){
             var unit = _rentalStorageList.GetByUnitNum(unitNum);
             unit.UnAssign();
-            var assignment = _assignStorageList.GetByUnit(unitNum);
-
-            var tenant = _tenantStorageList.GetById(assignment.Tenant.TenantId);
+            var tenant = _tenantStorageList.GetById(tenantId);
             tenant.UnAssign();
-
-            
-            
+            var assignment = _assignStorageList.GetByUnit(unitNum);
             assignment.IsAssigned = false;
             
         }
