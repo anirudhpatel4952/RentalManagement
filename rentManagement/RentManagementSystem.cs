@@ -30,11 +30,11 @@ namespace rentManagement
             Tenant tenant2 = 
             new Tenant(Guid.NewGuid(), "Jayshree", "Ben", "02-4100 Rae Street", "S4S3A0", "Regina", "Driver's License", 900, false);
 
-            Tenant tenant3 = 
-            new Tenant(Guid.NewGuid(), "Jayesh", "Kumar", "03-4100 Rae Street", "S4S3A0", "Regina", "Driver's License", 900, false);
+            // Tenant tenant3 = 
+            // new Tenant(Guid.NewGuid(), "Jayesh", "Kumar", "03-4100 Rae Street", "S4S3A0", "Regina", "Driver's License", 900, false);
 
-            Tenant tenant4 = 
-            new Tenant(Guid.NewGuid(), "Jaya", "Kumari", "04-4100 Rae Street", "S4S3A0", "Regina", "Driver's License", 900, false);
+            // Tenant tenant4 = 
+            // new Tenant(Guid.NewGuid(), "Jaya", "Kumari", "04-4100 Rae Street", "S4S3A0", "Regina", "Driver's License", 900, false);
             
             
             //creating the rental apartment objects
@@ -48,8 +48,8 @@ namespace rentManagement
             
             _tenantStorageList.Create(tenant1);
             _tenantStorageList.Create(tenant2);
-            _tenantStorageList.Create(tenant3);
-            _tenantStorageList.Create(tenant4);
+            // _tenantStorageList.Create(tenant3);
+            // _tenantStorageList.Create(tenant4);
 
 
 
@@ -124,6 +124,7 @@ namespace rentManagement
             return assignment;
             
         }
+        
         public void Unassignment(Guid tenantId, int unitNum){
             var unit = _rentalStorageList.GetByUnitNum(unitNum);
             unit.UnAssign();
@@ -131,6 +132,21 @@ namespace rentManagement
             tenant.UnAssign();
             var assignment = _assignStorageList.GetByUnit(unitNum);
             assignment.IsAssigned = false;
+            assignment.ContractDate = DateTime.Now;
+            
+        }
+
+        public void UnassignmentByUnit(int unitNum){
+            var unit = _rentalStorageList.GetByUnitNum(unitNum);
+            unit.UnAssign();
+            
+            var assignment = _assignStorageList.GetByUnit(unitNum);
+            assignment.IsAssigned = false;
+            assignment.ContractDate = DateTime.Now;
+            var tenant = _tenantStorageList.GetById(assignment.Tenant.TenantId);
+            tenant.UnAssign();
+            // var assignmentComplete = new Assignment(unit, tenant);
+            // _assignStorageList.Create(assignmentComplete);
             
         }
         

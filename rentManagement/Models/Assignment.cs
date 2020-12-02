@@ -9,7 +9,7 @@ namespace rentManagement.Models
             this.AssignId = Guid.NewGuid();
             this.Rental = rental;
             this.Tenant = tenant;
-            this.IsAssigned = false;
+            // this.IsAssigned = false;
             this.ContractDate = DateTime.Now;
                
         }
