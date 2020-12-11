@@ -1,5 +1,6 @@
 using System;
-
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 namespace rentManagement.Models
 {
     public class Assignment
@@ -9,9 +10,6 @@ namespace rentManagement.Models
             this.AssignId = Guid.NewGuid();
             this.Rental = rental;
             this.Tenant = tenant;
-            // this.IsAssigned = false;
-            this.ContractDate = DateTime.Now;
-               
         }
         public Assignment()
         {
@@ -20,7 +18,7 @@ namespace rentManagement.Models
         public Guid AssignId { get; set;}
         public Tenant Tenant { get; set; }
         public Rental Rental { get; set; }
-        public DateTime ContractDate { get; set; }
+        public DateTime ContractDate { get; private set; }
         public bool IsAssigned { get; set; }
 
         public override string ToString()

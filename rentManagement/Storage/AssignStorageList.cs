@@ -5,7 +5,7 @@ using rentManagement.Models;
 
 namespace rentManagement.Storage
 {
-    public class AssignStorageList : IStoreAssignmentList
+    public class AssignStorageList : IStoreAssignment
     {
         private readonly List<Assignment> _innerList;
 
@@ -13,28 +13,31 @@ namespace rentManagement.Storage
             _innerList = new List<Assignment>();
         }
         //changes fpr webApi
-        public Assignment Create(Assignment newAssignment){
+        public void Create(Assignment newAssignment){
             _innerList.Add(newAssignment);
-            return newAssignment;
+        }
+
+        public void Update(Assignment newAssignment){
+            
         }
         
         public List<Assignment> GetAll(){
             return _innerList;
         }
         //changes made for webApi
-        public Assignment GetByTenantIdAndUnit (Guid tenantId, int unit){
-            var assignment = _innerList.Find(x => x.Tenant.TenantId == tenantId && x.Rental.Unit == unit);
+        // public Assignment GetByTenantIdAndUnit (Guid tenantId, int unit){
+        //     var assignment = _innerList.Find(x => x.Tenant.TenantId == tenantId && x.Rental.Unit == unit);
+
+        //     if(assignment == null){
+        //         throw new Exception($"Assignment does not exist between Tenant {tenantId} and Unit {unit}.");
+        //     }
+        //     return assignment;
+        // }
+        public Assignment GetByUnit (Guid rentalId){
+            var assignment = _innerList.Find(x => x.Rental.RentalId == rentalId);
 
             if(assignment == null){
-                throw new Exception($"Assignment does not exist between Tenant {tenantId} and Unit {unit}.");
-            }
-            return assignment;
-        }
-        public Assignment GetByUnit (int unit){
-            var assignment = _innerList.Find(x => x.Rental.Unit == unit);
-
-            if(assignment == null){
-                throw new Exception($"Assignment does not exist for Unit {unit}.");
+                throw new Exception($"Assignment does not exist : {assignment}.");
             }
             return assignment;
         }

@@ -9,17 +9,6 @@ namespace rentManagement.Models
 {
     public class Tenant
     {
-        // //Data member
-        // private long _tenantId;
-        // private string _firstName;
-        // private string _lastName;
-        // private string _address;
-        // private string _postalCode;
-        // private string _city;
-        // private string _idProof;
-        // private double _deposit;
-        
-        
         public Tenant(Guid tenantId, string firstName, string lastName, string address, string postalCode, string city, string idProof, double deposit, bool isAssigned)
         {
             TenantId = tenantId;
@@ -38,7 +27,7 @@ namespace rentManagement.Models
         }
 
         //properties or access func
-        public Guid TenantId { get; set; }
+        public Guid TenantId { get; set;}
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string FullName {get {return FirstName +" "+ LastName;}}

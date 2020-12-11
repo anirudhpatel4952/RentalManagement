@@ -5,16 +5,15 @@ using rentManagement.Models;
 
 namespace rentManagement.Storage
 {
-    public interface IStoreAssignmentList
+    public interface IStoreAssignment
     {   
         //changes for webApi
-        Assignment Create(Assignment newAssignment);
+        void Create(Assignment newAssignment);
         
+        void Update(Assignment updatedAssignment);
         List<Assignment> GetAll();
 
-        Assignment GetByTenantIdAndUnit (Guid tenantId, int unit);
-
-        Assignment GetByUnit (int unit);
+        Assignment GetByUnit (Guid rentalId);
         
     }
-}
+} 

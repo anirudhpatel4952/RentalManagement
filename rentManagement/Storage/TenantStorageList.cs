@@ -15,9 +15,8 @@ namespace rentManagement.Storage
             _tenantStorageList = new List<Tenant>();
         }
         //changes for webApi
-        public Tenant Create(Tenant tenantToCreate) {
+        public void Create(Tenant tenantToCreate) {
             _tenantStorageList.Add(tenantToCreate);
-            return tenantToCreate;
             
         }
         // public Tenant CreateATenant(Guid tenantId, string firstName, string lastName, string address, string postalCode, string city, string idProof, double deposit, bool isAssigned){
@@ -71,8 +70,8 @@ namespace rentManagement.Storage
                 }
             return tenant;
         }
-        public List<Tenant> GetByFirstName(string firstName){
-            return _tenantStorageList.Where(x => x.FirstName.ToLower() == firstName.ToLower()).ToList();
-        }
+        // public List<Tenant> GetByFirstName(string firstName){
+        //     return _tenantStorageList.Where(x => x.FirstName.ToLower() == firstName.ToLower()).ToList();
+        // }
     }
 }

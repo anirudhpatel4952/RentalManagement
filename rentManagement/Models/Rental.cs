@@ -8,13 +8,14 @@ namespace rentManagement.Models
 {
     public class Rental
     {
-        public Rental(int apartmentNum, int unitNum, double numOfRooms, double cost, bool isAssigned)
+        public Rental(Guid rentalId, int apartmentNum, int unitNum, double numOfRooms, double cost, bool isAssigned)
         {
+            this.RentalId = rentalId;
             this.Apartment = apartmentNum;
             this.Unit = unitNum;
             this.NumberOfRoom = numOfRooms;
             this.Cost = cost;
-            this.IsAssigned = false;
+            this.IsAssigned = isAssigned;
         }
         public Rental()
         {
@@ -23,6 +24,7 @@ namespace rentManagement.Models
         
 
         //properties
+        public Guid RentalId {get; set;}
         public int Apartment { get; set; }
         public int Unit { get; set; }
         public double NumberOfRoom { get; set; }

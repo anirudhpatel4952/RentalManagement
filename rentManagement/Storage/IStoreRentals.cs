@@ -7,11 +7,13 @@ namespace rentManagement.Storage
     public interface IStoreRentals
     {
         
-        Rental Create(Rental unitToCreate);
+        void Create(Rental unitToCreate);
         void Update(Rental rentalToUpdate);
+
+        void Remove(Guid rentalToRemove);
         List<Rental> GetAll();
 
-        Rental GetByUnitNum(int unitToSearchByUnitNum);
+        Rental GetById(Guid id);
 
     }
 }
