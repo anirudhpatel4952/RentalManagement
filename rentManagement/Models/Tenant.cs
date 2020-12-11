@@ -9,7 +9,7 @@ namespace rentManagement.Models
 {
     public class Tenant
     {
-        public Tenant(Guid tenantId, string firstName, string lastName, string address, string postalCode, string city, string idProof, double deposit, bool isAssigned)
+        public Tenant(Guid tenantId, string firstName, string lastName, string address, string postalCode, string city, string idProof, double deposit, bool isAssigned, Guid userId)
         {
             TenantId = tenantId;
             FirstName = firstName;
@@ -20,6 +20,7 @@ namespace rentManagement.Models
             IdProof = idProof;
             Deposit = deposit;
             IsAssigned = false;
+            UserId = userId;
         }
         public Tenant()
         {
@@ -36,10 +37,8 @@ namespace rentManagement.Models
         public string City { get; set; }
         public string IdProof { get; set; }
         public double Deposit { get; set; }
-
         public bool IsAssigned { get; set;}
-        
-        
+        public Guid UserId { get; set; }
         //changes made for webApi
         public void Assign(){
             if(!IsAssigned){

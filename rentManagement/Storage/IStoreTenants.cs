@@ -17,11 +17,11 @@ namespace rentManagement.Storage
         
         //method to delete a tenant
 
-        void Remove(Guid tenantIdInput);
+        void Remove(Guid tenantIdInput, Guid userId);
         
-        List<Tenant> GetAll();
+        List<Tenant> GetAll(Guid userId);
 
-        Tenant GetById(Guid tenantToSearchById);
+        Tenant GetById(Guid tenantToSearchById, Guid userId);
         
     }
 }

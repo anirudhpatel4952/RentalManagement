@@ -27,23 +27,24 @@ namespace rentManagement.Storage
             _context.SaveChanges();
         }
         
-        public List<Assignment> GetAll(){
+        public List<Assignment> GetAll(Guid userId){
             var assignmentDb = _context.Assignments
                                 .AsNoTracking()
                                 .Include(x => x.Rental)
                                 .Include(x => x.Tenant)
+                                .Where(x => x.UserId == userId)
                                 .Select(x => ConvertFromDb(x))
                                 .ToList();
             return assignmentDb;
         }
         //changes made for webApi
         
-        public Assignment GetByUnit (Guid rentalId){
+        public Assignment GetByUnit (Guid rentalId, Guid userId){
             var assignment = _context.Assignments
                                     .AsNoTracking()
                                     .Include(x => x.Rental)
                                     .Include(x => x.Tenant)
-                                    .First(x => x.RentalId == rentalId);
+                                    .First(x => x.RentalId == rentalId && x.UserId == userId);
 
             var assignmentDb = ConvertFromDb(assignment);
             return assignmentDb;
@@ -55,6 +56,7 @@ namespace rentManagement.Storage
                 TenantId = assignment.Tenant.TenantId,
                 RentalId = assignment.Rental.RentalId,
                 IsAssigned = assignment.IsAssigned,
+                UserId = assignment.UserId
                 //Tenant = TenantStorageEF.ConvertToDb(assignment.Tenant),
                 //Rental = RentalStorageEF.ConvertToDb(assignment.Rental)
             };
@@ -66,7 +68,8 @@ namespace rentManagement.Storage
                 AssignId = assignment.AssignmentId,
                 Rental = RentalStorageEF.ConvertFromDb(assignment.Rental),
                 Tenant = TenantStorageEF.ConvertFromDb(assignment.Tenant),
-                IsAssigned = assignment.IsAssigned
+                IsAssigned = assignment.IsAssigned,
+                UserId = assignment.UserId
             };
         }
         

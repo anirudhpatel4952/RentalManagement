@@ -30,17 +30,20 @@ namespace rentManagement.Storage
             _context.SaveChanges();    
         }
 
-        public void Remove(Guid tenantIdInput){
-            var tenantToRemove = _context.Tenants.First(x => x.TenantId == tenantIdInput);
+        public void Remove(Guid tenantIdInput, Guid userId){
+            var tenantToRemove = _context.Tenants
+                                        .AsNoTracking()
+                                        .First(x => x.TenantId == tenantIdInput && x.UserId == userId);
             tenantToRemove.IsDeleted = true;
+            _context.Tenants.Update(tenantToRemove);
             _context.SaveChanges();
         }
         
-        public List<Tenant> GetAll(){
+        public List<Tenant> GetAll(Guid userId){
             List<Tenant> results = new List<Tenant>();
             var tenantFromDb = _context.Tenants
                                         .AsNoTracking()
-                                        .Where(x => x.IsDeleted == false)
+                                        .Where(x => x.IsDeleted == false && x.UserId == userId)
                                         .ToList();
             foreach(var tenants in tenantFromDb){
                 var tenant = ConvertFromDb(tenants);
@@ -49,9 +52,12 @@ namespace rentManagement.Storage
             return results; 
         }
 
-        public Tenant GetById(Guid id)
+        public Tenant GetById(Guid id, Guid userId)
         {
-            var tenantFromDb = _context.Tenants.AsNoTracking().First(x => x.TenantId == id);
+            var tenantFromDb = _context.Tenants
+                                        .AsNoTracking()
+                                        .Where(x => x.IsDeleted == false && x.UserId == userId)
+                                        .First(x => x.TenantId == id);
             var tenant = ConvertFromDb(tenantFromDb);
             return tenant;
         }
@@ -68,7 +74,8 @@ namespace rentManagement.Storage
                 City = tenantFromDb.City,
                 IdProof = tenantFromDb.IdProof,
                 Deposit = tenantFromDb.Deposit,
-                IsAssigned = tenantFromDb.IsAssigned
+                IsAssigned = tenantFromDb.IsAssigned,
+                UserId = tenantFromDb.UserId
             };
         }
         public static EFModels.Tenant ConvertToDb(Tenant tenantToCreate)
@@ -83,7 +90,9 @@ namespace rentManagement.Storage
                 City = tenantToCreate.City,
                 IdProof = tenantToCreate.IdProof,
                 Deposit = tenantToCreate.Deposit,
-                IsAssigned = tenantToCreate.IsAssigned
+                IsAssigned = tenantToCreate.IsAssigned,
+                UserId = tenantToCreate.UserId
+                
             };
         }
 

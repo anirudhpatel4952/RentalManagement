@@ -43,10 +43,10 @@ namespace rentManagement
             _tenantStorage.Update(tenantToUpdate);
         }
 
-        public List<Tenant> SearchForTenantByName(string firstNameToSearch){
+        public List<Tenant> SearchForTenantByName(string firstNameToSearch, Guid userId){
             var result = new List<Tenant>();
             var lowerCaseSearch = firstNameToSearch.ToLower();
-            var tenants = _tenantStorage.GetAll();
+            var tenants = _tenantStorage.GetAll(userId);
 
             foreach(var tenant in tenants){
                 var lowerCaseFirstName = tenant.FirstName.ToLower();
@@ -73,16 +73,16 @@ namespace rentManagement
         //     return _tenantStorage.CreateATenant(tenantId, firstName, lastName, address, postalCode, city, idProof, deposit, isAssigned); 
         // }
         //added for webApi
-        public Assignment CreateAssignment(Guid tenantId, Guid rentalId){
-            var tenant = _tenantStorage.GetById(tenantId);
+        public Assignment CreateAssignment(Guid tenantId, Guid rentalId, Guid userId){
+            var tenant = _tenantStorage.GetById(tenantId, userId);
             tenant.Assign();
             _tenantStorage.Update(tenant);
 
-            var unit = _rentalStorage.GetById(rentalId);
+            var unit = _rentalStorage.GetById(rentalId, userId);
             unit.Assign();
             _rentalStorage.Update(unit);
 
-            var assignment = new Assignment(unit, tenant){
+            var assignment = new Assignment(unit, tenant, userId){
                 Rental = unit,
                 Tenant = tenant,
                 IsAssigned = true
@@ -108,17 +108,17 @@ namespace rentManagement
         //     _assignStorage.Update(assignment);
         // }
 
-        public void UnassignmentByUnit(Guid rentalId){
-            var unit = _rentalStorage.GetById(rentalId);
+        public void UnassignmentByUnit(Guid rentalId, Guid userId){
+            var unit = _rentalStorage.GetById(rentalId, userId);
             unit.UnAssign();
             _rentalStorage.Update(unit);
 
-            var assignment = _assignStorage.GetByUnit(rentalId);
+            var assignment = _assignStorage.GetByUnit(rentalId, userId);
             assignment.IsAssigned = false;
             // assignment.ContractDate = DateTime.Now;
             _assignStorage.Update(assignment);
 
-            var tenant = _tenantStorage.GetById(assignment.Tenant.TenantId);
+            var tenant = _tenantStorage.GetById(assignment.Tenant.TenantId, assignment.Tenant.UserId);
             tenant.UnAssign();
             _tenantStorage.Update(tenant);
 
@@ -130,37 +130,37 @@ namespace rentManagement
         
         //method to delete a tenant
 
-        public void DeleteATenant(Guid tenantIdInput){
-            _tenantStorage.Remove(tenantIdInput); 
+        public void DeleteATenant(Guid tenantIdInput, Guid userId){
+            _tenantStorage.Remove(tenantIdInput, userId); 
         }
 
-        public void DeleteARental(Guid rentalToRemove){
-            _rentalStorage.Remove(rentalToRemove);
+        public void DeleteARental(Guid rentalToRemove, Guid userId){
+            _rentalStorage.Remove(rentalToRemove, userId);
         }
         
         //method to print all the tenants
         
-        public List<Tenant> PrintAllTenants(){
-            return _tenantStorage.GetAll();
+        public List<Tenant> PrintAllTenants(Guid userId){
+            return _tenantStorage.GetAll(userId);
         }
 
         //method to print all the units in the apartment
-        public List<Rental> PrintAllUnitsInApartn(){
-            return _rentalStorage.GetAll();
+        public List<Rental> PrintAllUnitsInApartn(Guid userId){
+            return _rentalStorage.GetAll(userId);
         }
         //method to print all assignments
-        public List<Assignment> PrintAllAssignments(){
-            return _assignStorage.GetAll();
+        public List<Assignment> PrintAllAssignments(Guid userId){
+            return _assignStorage.GetAll(userId);
         }
         
         //search functionality to search for a tenant
-        public Tenant SearchForTenants(Guid tenantToSearchById){
-           return _tenantStorage.GetById(tenantToSearchById);
+        public Tenant SearchForTenants(Guid tenantToSearchById, Guid userId){
+           return _tenantStorage.GetById(tenantToSearchById, userId);
         }
 
         //search functionality to search for a unit
-        public Rental SearchForUnits(Guid rentalId) {
-            return _rentalStorage.GetById(rentalId);
+        public Rental SearchForUnits(Guid rentalId, Guid userId) {
+            return _rentalStorage.GetById(rentalId, userId);
         }
 
     }

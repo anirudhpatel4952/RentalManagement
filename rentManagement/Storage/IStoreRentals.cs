@@ -10,10 +10,10 @@ namespace rentManagement.Storage
         void Create(Rental unitToCreate);
         void Update(Rental rentalToUpdate);
 
-        void Remove(Guid rentalToRemove);
-        List<Rental> GetAll();
+        void Remove(Guid rentalToRemove, Guid userId);
+        List<Rental> GetAll(Guid userId);
 
-        Rental GetById(Guid id);
+        Rental GetById(Guid id, Guid userId);
 
     }
 }

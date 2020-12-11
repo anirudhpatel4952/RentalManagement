@@ -10,5 +10,6 @@ namespace rentManagement.Storage.EFModels
         public Guid RentalId { get; set; }
         public DateTime ContractDate { get; set; }
         public bool IsAssigned { get; set; }
+        public Guid UserId { get; set; }
     }
 }

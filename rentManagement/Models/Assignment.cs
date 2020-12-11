@@ -5,11 +5,12 @@ namespace rentManagement.Models
 {
     public class Assignment
     {
-        public Assignment(Rental rental, Tenant tenant) 
+        public Assignment(Rental rental, Tenant tenant, Guid userId) 
         {
             this.AssignId = Guid.NewGuid();
             this.Rental = rental;
             this.Tenant = tenant;
+            this.UserId = userId;
         }
         public Assignment()
         {
@@ -20,6 +21,8 @@ namespace rentManagement.Models
         public Rental Rental { get; set; }
         public DateTime ContractDate { get; private set; }
         public bool IsAssigned { get; set; }
+
+        public Guid UserId { get; set; }
 
         public override string ToString()
         {

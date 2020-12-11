@@ -13,8 +13,9 @@ namespace rentManagement.Storage.EFModels
         public string IdProof { get; set; }
         public double Deposit { get; set; }
         public bool IsAssigned { get; set;}
-
         public bool IsDeleted { get; set; }
+
+        public Guid UserId { get; set; }
         
     }
 }

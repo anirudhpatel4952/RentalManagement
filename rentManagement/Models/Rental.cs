@@ -8,7 +8,7 @@ namespace rentManagement.Models
 {
     public class Rental
     {
-        public Rental(Guid rentalId, int apartmentNum, int unitNum, double numOfRooms, double cost, bool isAssigned)
+        public Rental(Guid rentalId, int apartmentNum, int unitNum, double numOfRooms, double cost, bool isAssigned, Guid userId)
         {
             this.RentalId = rentalId;
             this.Apartment = apartmentNum;
@@ -16,6 +16,7 @@ namespace rentManagement.Models
             this.NumberOfRoom = numOfRooms;
             this.Cost = cost;
             this.IsAssigned = isAssigned;
+            this.UserId = userId;
         }
         public Rental()
         {
@@ -29,8 +30,8 @@ namespace rentManagement.Models
         public int Unit { get; set; }
         public double NumberOfRoom { get; set; }
         public double Cost { get; set; } 
-
         public bool IsAssigned { get; set; }   
+        public Guid UserId { get; set; }
         
         //changes made for webApi
         public void Assign(){

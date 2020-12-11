@@ -11,9 +11,9 @@ namespace rentManagement.Storage
         void Create(Assignment newAssignment);
         
         void Update(Assignment updatedAssignment);
-        List<Assignment> GetAll();
+        List<Assignment> GetAll(Guid userId);
 
-        Assignment GetByUnit (Guid rentalId);
+        Assignment GetByUnit (Guid rentalId, Guid userId);
         
     }
 } 

@@ -25,24 +25,28 @@ namespace rentManagement.Storage
             _context.SaveChanges();
         }
 
-        public void Remove(Guid rentalToRemove){
-            var rental = _context.Rentals.First(x => x.RentalId == rentalToRemove); 
+        public void Remove(Guid rentalToRemove, Guid userId){
+            var rental = _context.Rentals
+                                    .AsNoTracking()
+                                    .First(x => x.RentalId == rentalToRemove && x.UserId == userId); 
             rental.IsDeleted = true;
+            _context.Rentals.Update(rental);
             _context.SaveChanges();
         }
-        public List<Rental> GetAll(){
+        public List<Rental> GetAll(Guid userId){
             var rentalFromDb = _context.Rentals
                                 .AsNoTracking()
-                                .Where(x => x.IsDeleted == false)
+                                .Where(x => x.IsDeleted == false && x.UserId == userId)
                                 .Select(x => ConvertFromDb(x))
                                 .ToList();
             
             return rentalFromDb;
         }
 
-        public Rental GetById(Guid id) {
+        public Rental GetById(Guid id, Guid userId) {
             var rentalFromDb = _context.Rentals
                                 .AsNoTracking()
+                                .Where(x => x.IsDeleted == false && x.UserId == userId)
                                 .First(x => x.RentalId == id);
             var rental = ConvertFromDb(rentalFromDb);        
             return rental;           
@@ -55,7 +59,8 @@ namespace rentManagement.Storage
                 rentalFromDb.Unit,
                 rentalFromDb.NumberOfRoom,
                 rentalFromDb.Cost,
-                rentalFromDb.IsAssigned
+                rentalFromDb.IsAssigned,
+                rentalFromDb.UserId
             );
         }
 
@@ -66,7 +71,8 @@ namespace rentManagement.Storage
                 Unit = rental.Unit,
                 NumberOfRoom = rental.NumberOfRoom,
                 Cost = rental.Cost,
-                IsAssigned = rental.IsAssigned
+                IsAssigned = rental.IsAssigned,
+                UserId = rental.UserId
             };
         }
 

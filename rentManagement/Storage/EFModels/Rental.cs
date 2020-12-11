@@ -9,7 +9,8 @@ namespace rentManagement.Storage.EFModels
         public double NumberOfRoom { get; set; }
         public double Cost { get; set; } 
         public bool IsAssigned { get; set; }
-
         public bool IsDeleted { get; set;}
+
+        public Guid UserId { get; set; }
     }
 }
